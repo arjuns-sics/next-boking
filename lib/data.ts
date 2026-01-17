@@ -45,11 +45,16 @@ const events: EventType[] = [
   { title: "Music Awards", date: "2026-04-18", location: "Los Angeles", capacity: 1000, id: 37 },
 ];
 
+const sleep =  ()=>{
+    return new Promise((resolve) => setTimeout(resolve, 500));
+}
+
 export function getEvents(): EventType[] {
   return events;
 }
 
-export function getPaginatedEvents(page: number, pageSize: number): EventType[] {
+export async function getPaginatedEvents(page: number, pageSize: number):Promise<EventType[]> {
+  await sleep()
   const startIndex = (page - 1) * pageSize;
   return events.slice(startIndex, startIndex + pageSize);
 }
@@ -62,7 +67,8 @@ export function getFeaturedEvents(): EventType[] {
   return events.filter((event) => event.id % 2 === 0);
 }
 
-export function createEvent(event: Omit<EventType, 'id'>): EventType {
+export async function createEvent(event: Omit<EventType, 'id'>): Promise<EventType> {
+    await sleep()
     const newEvent: EventType = {
         id: events.length + 1,
         ...event
@@ -71,7 +77,8 @@ export function createEvent(event: Omit<EventType, 'id'>): EventType {
     return newEvent;
 }
 
-export function updateEvent(id: number, updatedEvent: Partial<Omit<EventType, 'id'>>): EventType | undefined {
+export async function updateEvent(id: number, updatedEvent: Partial<Omit<EventType, 'id'>>): Promise<EventType | undefined> {
+    await sleep()
     const eventIndex = events.findIndex((event) => event.id === id);
     if (eventIndex === -1) {
         return undefined;
@@ -80,7 +87,8 @@ export function updateEvent(id: number, updatedEvent: Partial<Omit<EventType, 'i
     return events[eventIndex];
 }
 
-export function deleteEvent(id: number): boolean {
+export async function deleteEvent(id: number): Promise<boolean> {
+    await sleep()
     const eventIndex = events.findIndex((event) => event.id === id);
     if (eventIndex === -1) {
         return false;
