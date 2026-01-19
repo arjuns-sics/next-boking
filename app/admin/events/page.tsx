@@ -1,5 +1,5 @@
 "use client";
-
+import { handleCreateEvent } from "./action";
 import { useState } from "react";
 import { IBM_Plex_Mono, Libre_Baskerville } from "next/font/google";
 
@@ -38,8 +38,9 @@ export default function AdminCreateEventPage() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Placeholder: replace with server action / API call later
-    console.log("Creating event:", form);
+    // Call server action
+    const formData = { ...form };
+    handleCreateEvent(formData);
 
     alert("Event created (mock)");
   }
